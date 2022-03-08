@@ -1,8 +1,14 @@
-export {};
-const mongoose = require("mongoose");
-const express = require("express");
+import mongoose from "mongoose";
+import express from "express";
+import { ConnectOptions } from "mongodb";
 
-require("../config/env");
+import CardsRoutes from "./routes/cards";
+import ImagesRoutes from "./routes/images";
+
+if (process.env.NODE_ENV !== "production") {
+  const dotenv = require("dotenv"); // eslint-disable-line
+  dotenv.config();
+}
 
 const app = express();
 const port = 5000;
@@ -11,21 +17,18 @@ const port = 5000;
 app.use(express.json());
 
 // DB Config
-const db = process.env.MONGO_DB_URI;
+const db = process.env.MONGO_DB_URI || "";
 
 // Connect to Mongo
 mongoose
   .connect(db, {
     useNewUrlParser: true,
-  }) // Adding new mongo url parser
+  } as ConnectOptions) // Adding new mongo url parser
   .then(() => console.log("MongoDB Connected..."))
   .catch((err) => console.log(err));
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
-app.use("/api/cards", require("./routes/cards"));
+app.use("/api/cards", CardsRoutes);
+app.use("/api/images", ImagesRoutes);
 
 app.listen(port, () => {
   return console.log(`Express is listening at http://localhost:${port}`);

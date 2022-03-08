@@ -1,0 +1,11 @@
+{
+    "watch": ["src/"],
+    "ignore": ["dist/", "node_modules", ".git"],
+    "ext": "ts,js,json",
+    "env": {
+      "NODE_ENV": "development"
+    },
+    "execMap": {
+      "ts": "NODE_ENV=development NODE_OPTIONS='--experimental-fetch' ts-node -T"
+    }
+}
