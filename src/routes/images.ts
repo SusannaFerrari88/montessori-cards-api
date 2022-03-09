@@ -7,11 +7,18 @@ router.get("/", async (req: Request, res: Response, next): Promise<void> => {
   const index = (req.query.index || 0) as string;
 
   const response = await fetch(
-    `https://api.pexels.com/v1/search?query=${name}`
+    `https://api.pexels.com/v1/search?query=${name}`,
+    {
+      headers: {
+        Authorization: process.env.PEXELS_API_KEY || "",
+      },
+    }
   );
   const responseJson = await response.json();
-  const imageUrl = responseJson?.photos[index]?.src?.tiny;
-  res.json(imageUrl);
+  if (responseJson && responseJson.photos.length) {
+    const imageUrl = responseJson?.photos[index]?.src?.tiny;
+    res.json(imageUrl);
+  }
 
   next();
 });
