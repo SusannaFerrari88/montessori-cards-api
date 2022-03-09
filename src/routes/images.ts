@@ -1,5 +1,4 @@
 import { Router, Request, Response } from "express";
-import { isNamedExportBindings } from "typescript";
 
 const router = Router();
 
@@ -11,8 +10,8 @@ router.get("/", async (req: Request, res: Response, next): Promise<void> => {
     `https://api.pexels.com/v1/search?query=${name}`
   );
   const responseJson = await response.json();
-  const imageUrl = responseJson?.photos[index]?.src?.medium;
-  res.json({ imageUrl });
+  const imageUrl = responseJson?.photos[index]?.src?.tiny;
+  res.json(imageUrl);
 
   next();
 });

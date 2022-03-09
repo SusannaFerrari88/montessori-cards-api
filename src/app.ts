@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import express from "express";
 import { ConnectOptions } from "mongodb";
+import cors from "cors";
 
 import CardsRoutes from "./routes/cards";
 import ImagesRoutes from "./routes/images";
@@ -15,6 +16,8 @@ const port = 5000;
 
 // Bodyparser Middleware
 app.use(express.json());
+
+app.use(cors());
 
 // DB Config
 const db = process.env.MONGO_DB_URI || "";

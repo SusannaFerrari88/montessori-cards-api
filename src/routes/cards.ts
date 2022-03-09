@@ -4,7 +4,7 @@ import CardType from "../types/Card";
 
 const router = Router();
 
-router.get("/", (res: Response): void => {
+router.get("/", (req: Request, res: Response): void => {
   Card.find().exec((err: any, data: CardType[]) => {
     if (err) return res.json({ success: false, error: err });
     return res.json({ success: true, data });
